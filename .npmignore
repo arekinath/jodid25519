@@ -7,4 +7,5 @@
 /coverage
 /doc/api
 /build/
+/test/
 /jodid25519-*.tgz
