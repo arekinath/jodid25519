@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * Copyright (c) 2014 Mega Limited
  * under the MIT License.
@@ -7,13 +9,10 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/dh",
-    "jodid25519/eddsa",
-    "jodid25519/curve255",
-    "jodid25519/utils",
-], function(dh, eddsa, curve255, utils) {
-    "use strict";
+var dh = require('./lib/dh');
+var eddsa = require('./lib/eddsa');
+var curve255 = require('./lib/curve255');
+var utils = require('./lib/utils')l
     
     /**
      * @exports jodid25519
@@ -33,5 +32,4 @@ define([
     ns.curve255 = curve255;
     ns.utils = utils;
 
-    return ns;
-});
+module.exports = ns;
