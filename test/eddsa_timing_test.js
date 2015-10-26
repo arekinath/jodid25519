@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Ed25519 timing tests using test vectors taken from
@@ -13,21 +14,15 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/eddsa",
-    "chai",
-    "asmcrypto",
-    "asmcrypto",
-], function(ns, chai, asmCrypto) {
-    "use strict";
+var ns = require('../lib/eddsa');
+var chai = require('chai');
+var _td_eddsa = require('./ecdsa_test_vectors');
+var atob = function(s) { return (new Buffer(s, 'base64').toString('binary')); };
+var btoa = function(s) { return (new Buffer(s, 'binary').toString('base64')); };
 
     var assert = chai.assert;
 
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
-
     var _td = _td_eddsa;
-    asmCrypto.random.seed(new Uint8Array([42]));
 
     var MIN_TESTS = 50;
     var NUM_TESTS = _td.SIGN_INPUT.length;
@@ -60,7 +55,6 @@ define([
                 + " ms, +" + maxpc + "%, -" + minpc + "%, ~" + stdevpc + "%");
     };
 
-    if (window.TEST_TIMING) {
         // Only run this if we're doing timing tests.
         describe("Ed25519 timing tests:", function() {
             it('signing and verification', function() {
@@ -170,5 +164,3 @@ define([
                 console.log('Duration per key seed generation ' + timingStatsText(timings));
             });
         });
-    }
-});

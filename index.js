@@ -12,7 +12,7 @@
 var dh = require('./lib/dh');
 var eddsa = require('./lib/eddsa');
 var curve255 = require('./lib/curve255');
-var utils = require('./lib/utils')l
+var utils = require('./lib/utils');
     
     /**
      * @exports jodid25519

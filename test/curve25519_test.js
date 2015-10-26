@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Curve25519 compliance tests from file ``curve25519.impl.check.c`` in
@@ -13,18 +14,12 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519",
-    "jodid25519/curve255",
-    "chai",
-    "asmcrypto",
-], function(ns, curve255, chai, asmCrypto) {
-    "use strict";
+var ns = require('../index');
+var curve255 = require('../lib/curve255');
+var chai = require('chai');
+var _td_dh = require('./dh_test_vectors');
 
     var assert = chai.assert;
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
 
     function xor(a, b) {
         var result = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -60,4 +55,4 @@ define([
             assert.deepEqual(e1e2k, curve255.hexDecodeVector(_td_dh.CHAIN_10_HEX));
         });
     });
-});
+

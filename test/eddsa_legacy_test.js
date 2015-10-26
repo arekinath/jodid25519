@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Port of some legacy tests from the old djbec.js module.
@@ -12,17 +13,10 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/eddsa",
-    "chai",
-    "asmcrypto",
-], function(ns, chai, asmCrypto) {
-    "use strict";
+var ns = require('../lib/eddsa');
+var chai = require('chai');
     
     var assert = chai.assert;
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
 
     describe("legacy tests (original fast-djbec.js)", function() {
         describe('signing', function() {
@@ -40,4 +34,4 @@ define([
             });
         });
     });
-});
+

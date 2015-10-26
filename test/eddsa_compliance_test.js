@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Ed25519 compliance tests with test vectors taken from
@@ -13,21 +14,18 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/eddsa",
-    "chai",
-    "asmcrypto",
-], function(ns, chai, asmCrypto) {
-    "use strict";
+var ns = require('../lib/eddsa');
+var chai = require('chai');
+var _td_eddsa = require('./ecdsa_test_vectors');
+
+var atob = function(s) { return (new Buffer(s, 'base64').toString('binary')); };
+var btoa = function(s) { return (new Buffer(s, 'binary').toString('base64')); };
 
     var assert = chai.assert;
 
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
-
     var _td = _td_eddsa;
 
-    var numTests = window.TEST_FULL ? _td.SIGN_INPUT.length : 32;
+    var numTests = 100; /*_td.SIGN_INPUT.length;*/
 
     describe("Ed25519 compliance tests", function() {
         describe('signing and verification', function() {
@@ -57,4 +55,4 @@ define([
             }
         });
     });
-});
+

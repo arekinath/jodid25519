@@ -13,6 +13,7 @@
  */
 
 var _td_dh = {};
+module.exports = _td_dh;
 
 // NaCl test vectors.
 // Conveniently poached from

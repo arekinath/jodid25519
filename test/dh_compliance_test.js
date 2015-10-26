@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Curve25519 compliance tests with test vectors taken from NaCl tests.
@@ -12,17 +13,16 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/dh",
-    "chai",
-    "asmcrypto",
-], function(ns, chai, asmCrypto) {
-    "use strict";
+var ns = require('../lib/dh');
+var chai = require('chai');
+var sinon = require('sinon');
+var crypto = require('crypto');
+var _td_dh = require('./dh_test_vectors');
+
+var atob = function(s) { return (new Buffer(s, 'base64').toString('binary')); };
+var btoa = function(s) { return (new Buffer(s, 'binary').toString('base64')); };
 
     var assert = chai.assert;
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
     
     var _td = _td_dh;
 
@@ -51,4 +51,4 @@ define([
             });
         });
     });
-});
+

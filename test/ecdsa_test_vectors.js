@@ -5,6 +5,7 @@
 // sm includes m at end
 
 var _td_eddsa = {};
+module.exports = _td_eddsa;
 _td_eddsa.SIGN_INPUT =
 [['nWGxne/9WmC6hEr0kuwsxERJxWl7MmkZcDusAxyuf2DXWpgBgrEKt9VL/tPJZAc6DuFy89qmIyWvAhpo9wdRGg==',
   '11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo=',

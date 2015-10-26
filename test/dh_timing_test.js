@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Timing tests for Curve25519 ECDH.
@@ -12,15 +13,8 @@
  * You should have received a copy of the license along with this program.
  */
 
-
-define([
-    "jodid25519/curve255",
-    "asmcrypto",
-], function(curve255, asmCrypto) {
-    "use strict";
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
+var curve255 = require('../lib/curve255');
+var _td_dh = require('./dh_test_vectors');
 
     var _td = _td_dh;
     var MIN_TESTS = 50;
@@ -54,7 +48,6 @@ define([
                 + " ms, +" + maxpc + "%, -" + minpc + "%, ~" + stdevpc + "%");
     };
 
-    if (window.TEST_TIMING) {
         // Only run this if we're doing timing tests.
         describe("Curve25519 timing tests:", function() {
             it('curve25519()', function() {
@@ -89,5 +82,4 @@ define([
                 console.log('Duration per curve25519_raw() call ' + timingStatsText(timings));
             });
         });
-    }
-});
+

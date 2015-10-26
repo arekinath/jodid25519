@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * Tests for internal utils functions.
@@ -12,17 +13,13 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/utils",
-    "chai",
-    "asmcrypto",
-], function(ns, chai, asmCrypto) {
-    "use strict";
+var ns = require('../lib/utils');
+
+var chai = require('chai');
+
+var _td_dh = require('./dh_test_vectors');
 
     var assert = chai.assert;
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
 
     var _td = _td_dh;
 
@@ -37,4 +34,3 @@ define([
             });
         });
     });
-});

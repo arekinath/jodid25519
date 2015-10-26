@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileOverview
  * API tests for the EdDSA module.
@@ -12,18 +13,17 @@
  * You should have received a copy of the license along with this program.
  */
 
-define([
-    "jodid25519/eddsa",
-    "chai",
-    "sinon/sandbox",
-    "asmcrypto",
-], function(ns, chai, sinon_sandbox, asmCrypto) {
-    "use strict";
+var ns = require('../lib/eddsa');
+var chai = require('chai');
+var sinon = require('sinon');
+var crypto = require('crypto');
+
+var atob = function(s) { return (new Buffer(s, 'base64').toString('binary')); };
+var btoa = function(s) { return (new Buffer(s, 'binary').toString('base64')); };
+
+var _td_eddsa = require('./ecdsa_test_vectors');
 
     var assert = chai.assert;
-
-    // Shut up warning messages on random number generation for unit tests.
-    asmCrypto.random.skipSystemRNGWarning = true;
 
     var _td = _td_eddsa;
 
@@ -31,7 +31,7 @@ define([
     var sandbox = null;
 
     beforeEach(function() {
-        sandbox = sinon_sandbox.create();
+        sandbox = sinon.sandbox.create();
     });
 
     afterEach(function() {
@@ -124,12 +124,9 @@ define([
                        0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff];
 
             var _copy = function(forced) {
-                var _inner = function(value) {
-                    for (var i = 0; i < value.length; i++) {
-                        value[i] = forced[i];
-                    }
-                }
-                return _inner;
+                return (function (len) {
+                    return (new Buffer(forced));
+                });
             };
 
             it('generate several different key seeds', function() {
@@ -143,13 +140,13 @@ define([
             });
 
             it('valid keys with zeros', function() {
-                sandbox.stub(asmCrypto, 'getRandomValues', _copy(zeros));
+                sandbox.stub(crypto, 'randomBytes', _copy(zeros));
                 var expected = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
                 assert.strictEqual(btoa(ns.generateKeySeed()), expected);
             });
 
             it('valid keys with 0xff', function() {
-                sandbox.stub(asmCrypto, 'getRandomValues', _copy(ffs));
+                sandbox.stub(crypto, 'randomBytes', _copy(ffs));
                 var expected = '//////////////////////////////////////////8=';
                 assert.strictEqual(btoa(ns.generateKeySeed()), expected);
             });
@@ -164,4 +161,4 @@ define([
             });
         });
     });
-});
+
