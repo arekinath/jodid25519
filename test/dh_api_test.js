@@ -40,13 +40,13 @@ var btoa = function(s) { return (new Buffer(s, 'binary').toString('base64')); };
     describe("API tests", function() {
         describe('computeKey() function', function() {
             it('compute pub key', function() {
-                var result = ns.computeKey(atob(_td.ALICE_PRIV));
+                var result = ns.computeKey(new Buffer(_td.ALICE_PRIV, 'base64'));
                 assert.strictEqual(btoa(result), _td.ALICE_PUB);
             });
 
             it('compute secret key', function() {
                 var result = ns.computeKey(atob(_td.ALICE_PRIV),
-                                           atob(_td.BOB_PUB));
+                                           new Buffer(_td.BOB_PUB, 'base64'));
                 assert.strictEqual(btoa(result), _td.SECRET_KEY);
             });
         });
